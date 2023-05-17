@@ -1,0 +1,72 @@
+
+!**************************************************************************************
+! Generated with OLGA version 2021.1.2
+!**************************************************************************************
+
+!**************************************************************************************
+! Global keywords
+!**************************************************************************************
+OPTIONS TEMPERATURE=UGIVEN, FLOWMODEL=OLGAHD
+FILES PVTFILE="C:/Users/wangwc8/Desktop/prepostprocess/to wwc/DF291-2025.tab"
+INTEGRATION ENDTIME=1 d, MAXDT=1 s, MINDT=0.001 s, STARTTIME=0 s, DTSTART=0.001 s
+RESTART READFILE=OFF
+TRENDDATA VARIABLE=(LIQC, OILC, WATC)
+
+!**************************************************************************************
+! Library keywords
+!**************************************************************************************
+
+!**************************************************************************************
+! Network Component
+!**************************************************************************************
+NETWORKCOMPONENT TYPE=FLOWPATH, TAG=FLOWPATH_1
+ PARAMETERS LABEL=FLOWPATH_1
+ BRANCH FLUID=DF291
+ GEOMETRY LABEL="GEOMETRY-1"
+ PIPE ROUGHNESS=0.05 mm, LABEL="PIPE-1", NSEGMENT=2, LSEGMENT=(9.6892, 10.3108) m, \
+        LENGTH=20 m, ELEVATION=0 m, DIAMETER=247.65 mm
+ TRENDDATA VARIABLE=(PT, TM), POSITION="POS-1"
+ TRENDDATA VARIABLE=(ACCLIQ, EVR, PT, QGST, QLST, QLT, QLTHL, QLTWT, QOST, QWST, \
+        TM, UG, UL), POSITION="POS-2"
+ PROFILEDATA VARIABLE=(HOL, PT, TM, QLT, QG, Q2, ID)
+ SOURCE LABEL="SOUR-1", TIME=0 s, SOURCETYPE=MASS, PIPE="PIPE-1", SECTION=1, TEMPERATURE=46.7 C, \
+        STDFLOWRATE=1173700 Sm3/d, PHASE=GAS
+ PIPE ROUGHNESS=0.05 mm, LABEL="PIPE-2", NSEGMENT=5, LSEGMENT=(11.1774, 11.1774, \
+        18.0192, 19.0629, 19.0629) m, LENGTH=78.5 m, ELEVATION=-78.5 m, DIAMETER=247.65 mm
+ PIPE ROUGHNESS=0.05 mm, LABEL="PIPE-3", NSEGMENT=41, LSEGMENT=(37.0289, 71.7207, \
+        87.5559, 117.5157, 188.3168, 324.1205, 575.1818, 592.4208, 603.7354, 610.2371, \
+        612.9308, 612.7183, 610.4012, 606.6845, 602.1798, 597.4088, 592.8064, \
+        588.7242, 585.4337, 583.1295, 581.933, 581.8953, 583.001, 585.1708, 588.2656, \
+        592.0895, 596.3927, 600.8755, 605.1915, 608.9503, 611.7216, 613.038, 612.3987, \
+        609.2725, 603.1012, 593.303, 579.276, 442.9999, 239.6344, 138.0282, 73.2105) m, \
+        LENGTH=20240 m, ELEVATION=0 m, DIAMETER=247.65 mm
+ PIPE ROUGHNESS=0.05 mm, LABEL="PIPE-4", NSEGMENT=3, LSEGMENT=(37.0083, 27.6437, \
+        13.8479) m, LENGTH=78.5 m, ELEVATION=78.5 m, DIAMETER=247.65 mm
+ PIPE ROUGHNESS=0.05 mm, LABEL="PIPE-5", NSEGMENT=2, LSEGMENT=(9.6892, 10.3108) m, \
+        LENGTH=20 m, ELEVATION=0 m, DIAMETER=247.65 mm
+ HEATTRANSFER LABEL="HEATTRANS-1", UVALUE=14 W/m2-C, TAMBIENT=24.3 C
+ POSITION LABEL="POS-1", PIPE="PIPE-1", SECTION=1
+ POSITION LABEL="POS-2", PIPE="PIPE-5", SECTION=2
+ENDNETWORKCOMPONENT
+
+!**************************************************************************************
+! Network Component
+!**************************************************************************************
+NETWORKCOMPONENT TYPE=NODE, TAG=NODE_1
+ PARAMETERS LABEL=NODE_1, TYPE=CLOSED
+ENDNETWORKCOMPONENT
+
+!**************************************************************************************
+! Network Component
+!**************************************************************************************
+NETWORKCOMPONENT TYPE=NODE, TAG=NODE_2
+ PARAMETERS LABEL=NODE_2, TYPE=PRESSURE, TEMPERATURE=30 C, PRESSURE=32 bara, FLUID=DF291
+ENDNETWORKCOMPONENT
+
+!**************************************************************************************
+! Connections
+!**************************************************************************************
+CONNECTION TERMINALS = (FLOWPATH_1 INLET, NODE_1 FLOWTERM_1)
+CONNECTION TERMINALS = (FLOWPATH_1 OUTLET, NODE_2 FLOWTERM_1)
+
+ENDCASE
